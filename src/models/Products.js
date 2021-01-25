@@ -1,12 +1,12 @@
 import {Schema, model} from 'mongoose'
 
-new Schema({
+const productSchema = new Schema({
     name: {
         type: String,
         required: true
     },
     description: {
-        type: Description
+        type: String
     },
     image: {
         type: Buffer
@@ -20,3 +20,5 @@ new Schema({
         required: true
     }
 })
+
+export default model('product', productSchema)
