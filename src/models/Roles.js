@@ -4,6 +4,8 @@ const rolesSchema = new Schema({
     name: {
         type: String
     }
+},{
+    versionKey: false
 })
 
 export default model('roles', rolesSchema)

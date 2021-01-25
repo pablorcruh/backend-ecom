@@ -19,6 +19,8 @@ const productSchema = new Schema({
         type: Number,
         required: true
     }
+},{
+    versionKey: false
 })
 
 export default model('product', productSchema)

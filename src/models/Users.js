@@ -29,6 +29,8 @@ const usersSchema = new Schema({
             }
         }
     }
+},{
+    versionKey: false
 })
 
 export default model('user', usersSchema)
