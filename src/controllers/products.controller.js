@@ -21,7 +21,7 @@ export const uploadImage = async (req, res) => {
         const productId = req.params.productId
         const product = await Products.findById(productId)
         if(!product){
-            res.json({message: 'Product not found'})
+            res.status(400).json({message: 'Product not found'})
             return
         }
         product.image = req.file.buffer
@@ -37,11 +37,22 @@ export const getProducts = async (req, res) => {
 }
 
 export const getProductById = async (req, res) => {
-    
+    try{
+        const productId = req.params.productId
+        const product = await Products.findById(productId)
+        if(!product){
+            res.status(400).json({message: 'product not found'})
+            return
+        }
+        res.status(200).json(product) 
+    }catch(error){
+        console.error(error.message)
+        res.status(500).json({message:'Oops something went wrong'})
+    }
 }
 
 export const updateProductById = async (req, res) => {
-
+    
 }
 
 export const deleteProductById = async (req, res) => {

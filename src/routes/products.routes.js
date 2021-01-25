@@ -26,6 +26,8 @@ router.post('/:productId/image', upload.single('product'),productController.uplo
     res.status(400).send({error: error.message})
 })
 
+router.get('/:productId', productController.getProductById)
+
 router.put('/:productId', productController.updateProductById)
 
 router.delete('/:productId', productController.deleteProductById)
