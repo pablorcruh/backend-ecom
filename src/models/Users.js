@@ -7,7 +7,8 @@ const usersSchema = new Schema({
         trim: true        
     },
     username: {
-        type: String
+        type: String,
+        unique: true
     },
     email: {
         type: String,
@@ -24,7 +25,7 @@ const usersSchema = new Schema({
         type: String,
         required: true,
         validate(value){
-            if(validator.isLength(value, {min: 5})){
+            if(!validator.isLength(value, {min: 5})){
                 throw new Error('Password must be greated than 5')
             }
         }
