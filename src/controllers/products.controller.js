@@ -1,19 +1,4 @@
 import Products from '../models/Products'
-import multer from 'multer'
-
-const upload = multer({
-    limits: {
-        fileSize : 1000000
-    },
-    fileFilter(req,file, cb){
-        if(!file.originalname.match(/\.(.jpg | jpeg | png)$/)){
-            return cb(new Error('Please upload an image'))
-        }
-        cb(undefined, true)
-    }
-})
-
-
 export const createProduct = async (req, res) => {
     try {
         const {name, description, stock, price} = req.body
@@ -21,12 +6,29 @@ export const createProduct = async (req, res) => {
             name, 
             description,
             stock,
+            image: null,
             price
         })
         const productSaved = await newProduct.save()
         res.status(200).json(productSaved)
     } catch (error) {
         res.status(500).json({message: error.message})
+    }
+}
+
+export const uploadImage = async (req, res) => {
+    try{
+        const productId = req.params.productId
+        const product = await Products.findById(productId)
+        if(!product){
+            res.json({message: 'Product not found'})
+            return
+        }
+        product.image = req.file.buffer
+        await Products.findByIdAndUpdate(productId, product)
+        res.status(200).send()
+    }catch(error){
+        res.status(500).json({message: 'Oops something went wrong'})
     }
 }
 
