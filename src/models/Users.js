@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose'
+import {Schema, model, SchemaType} from 'mongoose'
 import validator from 'validator'
 const usersSchema = new Schema({
     name: {
@@ -28,7 +28,11 @@ const usersSchema = new Schema({
                 throw new Error('Password must be greated than 5')
             }
         }
-    }
+    },
+    roles:[{
+        ref: 'roles',
+        type: Schema.Types.ObjectId
+    }]
 },{
     versionKey: false
 })
