@@ -9,9 +9,8 @@ export const createProduct = async (req, res) => {
             image: null,
             price
         })
-        //const productSaved = await newProduct.save()
-        res.send()
-        //res.status(200).json(productSaved)
+        const productSaved = await newProduct.save()
+        res.status(200).json(productSaved)
     } catch (error) {
         console.error.error(error.message)
         res.status(500).json({message: error.message})
