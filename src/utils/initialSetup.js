@@ -1,5 +1,4 @@
 import Roles from '../models/Roles'
-import Users from '../models/Users'
 export const createRoles = async() => {
     try{
         const count = await Roles.estimatedDocumentCount()

@@ -1,4 +1,5 @@
 import {Schema, model, SchemaType} from 'mongoose'
+import bcrypt from 'bcryptjs'
 import validator from 'validator'
 const usersSchema = new Schema({
     name: {
@@ -38,5 +39,12 @@ const usersSchema = new Schema({
 },{
     versionKey: false
 })
+
+usersSchema.statics.encryptPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10)
+    return await bcrypt.hash(password, salt)
+}
+
+
 
 export default model('user', usersSchema)

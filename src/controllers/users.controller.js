@@ -11,6 +11,8 @@ export const createUser = async(req, res) => {
             password,
             roles: rolesFound.map((role)=> role._id)
         })
+
+        newUser.password = await Users.encryptPassword(newUser.password)
         await newUser.save()
         res.status(200).json(newUser)
     }catch(error){
