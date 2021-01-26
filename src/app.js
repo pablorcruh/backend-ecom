@@ -1,7 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 
-import {createRoles, createAdmin} from './utils/initialSetup'
+import {createRoles} from './utils/initialSetup'
 
 import productRouter from './routes/products.routes'
 import usersRouter from './routes/users.routes'
