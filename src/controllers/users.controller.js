@@ -6,15 +6,19 @@ import Roles from '../models/Roles'
 export const createUser = async(req, res) => {
     try{
         const {name, username, email, password, roles} = req.body
-        const rolesFound = await Roles.find({ name: { $in: roles } });
         const newUser = new Users({
             name,
             username,
             email,
-            password,
-            roles: rolesFound.map((role)=> role._id)
+            password
         })
-
+        let rolesFound
+        if(roles){
+            rolesFound = await Roles.find({ name: { $in: roles } });
+        }else{
+            rolesFound = await Roles.find({name:'shopper'})
+        }
+        newUser.roles = rolesFound.map((role)=> role._id)
         newUser.password = await Users.encryptPassword(newUser.password)
         await newUser.save()
         res.status(200).json(newUser)
@@ -28,7 +32,7 @@ export const userLogin = async (req, res) => {
     try{
         const {email, password} = req.body
         const user = await Users.findByCredentials(email, password)
-        const token = jwt.sign({id: user._id}, 'clave',{
+        const token = jwt.sign({id: user._id, roles: user.roles}, 'clave',{
             expiresIn: 86400
         })
         res.json({token})
