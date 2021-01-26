@@ -61,6 +61,7 @@ export const getProductImage = async(req, res) => {
     try {
         const product = await Products.findById(req.params.productId)
         if(!product) throw new Error()
+        if(!product.image) res.status(404).json({message:'no image found'})
         res.set('Content-Type', 'image/jpg')
         res.send(product.image)
     } catch (error) {
