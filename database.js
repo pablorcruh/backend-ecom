@@ -6,5 +6,5 @@ mongoose.connect('mongodb://localhost/backend-ecom', {
     useCreateIndex: true,
     useFindAndModify: true
 })
-        .then(db => console.log('DB is connected'))
-        .catch(error => console.log(error))
+    .then(db => console.log('DB is connected'))
+    .catch(error => console.log(error))

@@ -8,4 +8,4 @@ const rolesSchema = new Schema({
     versionKey: false
 })
 
-export default model('roles', rolesSchema)
+export default model('Roles', rolesSchema)

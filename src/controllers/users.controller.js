@@ -1,5 +1,8 @@
+import jwt from 'jsonwebtoken'
+
 import Users from '../models/Users'
 import Roles from '../models/Roles'
+
 export const createUser = async(req, res) => {
     try{
         const {name, username, email, password, roles} = req.body
@@ -18,5 +21,19 @@ export const createUser = async(req, res) => {
     }catch(error){
         console.error(error.message)
         res.status(500).json({message: error.message})
+    }
+}
+
+export const userLogin = async (req, res) => {
+    try{
+        const {email, password} = req.body
+        const user = await Users.findByCredentials(email, password)
+        const token = jwt.sign({id: user._id}, 'clave',{
+            expiresIn: 86400
+        })
+        res.json({token})
+    }catch(error){
+        console.error(error.message)
+        res.status(401).json({message: 'Unable to Login'})
     }
 }

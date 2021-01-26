@@ -33,7 +33,7 @@ const usersSchema = new Schema({
         }
     },
     roles:[{
-        ref: 'roles',
+        ref: 'Roles',
         type: Schema.Types.ObjectId
     }]
 },{
@@ -45,6 +45,17 @@ usersSchema.statics.encryptPassword = async (password) => {
     return await bcrypt.hash(password, salt)
 }
 
+usersSchema.statics.findByCredentials = async(email, password) => {
+    const user = await User.findOne({email}).populate('roles')
+    if(!user){
+        throw new Error('Credentials not found')
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if(!isMatch){
+        throw new Error('Password not valid')
+    }
+    return user
+}
 
-
-export default model('user', usersSchema)
+const User = model('User', usersSchema)
+ export default User
