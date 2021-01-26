@@ -23,4 +23,11 @@ const productSchema = new Schema({
     versionKey: false
 })
 
+productSchema.methods.toJSON = function () {
+    const product = this
+    const productObject = product.toObject()
+    delete productObject.image
+    return productObject
+}
+
 export default model('Product', productSchema)

@@ -1,4 +1,5 @@
 import Products from '../models/Products'
+import os from 'os'
 export const createProduct = async (req, res) => {
     try {
         const {name, description, stock, price} = req.body
@@ -46,10 +47,25 @@ export const getProductById = async (req, res) => {
             res.status(400).json({message: 'product not found'})
             return
         }
+        const hostname= os.hostname()
+        const imageURL = "http://".concat(hostname).concat(':3000/api/products/').concat(product._id).concat('/image')
+        product.set('imageURL', imageURL, {strict:false})
         res.status(200).json(product) 
     }catch(error){
-        console.error.error(error.message)
-        res.status(500).json({message:'Oops something went wrong'})
+        console.error(error.message)
+        res.status(500).json({message:error.message})
+    }
+}
+
+export const getProductImage = async(req, res) => {
+    try {
+        const product = await Products.findById(req.params.productId)
+        if(!product) throw new Error()
+        res.set('Content-Type', 'image/jpg')
+        res.send(product.image)
+    } catch (error) {
+        console.error(error.message)
+        res.status(404).send()    
     }
 }
 

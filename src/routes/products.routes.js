@@ -21,6 +21,8 @@ const upload = multer({
 
 router.get('/', productController.getProducts)
 
+router.get('/:productId/image', productController.getProductImage)
+
 router.post('/', [authJWT.verifyToken, authJWT.isAdmin],productController.createProduct)
 
 router.post('/:productId/image', upload.single('product'),productController.uploadImage, (error, req, res, next) => {
