@@ -4,11 +4,12 @@ const usersSchema = new Schema({
     name: {
         type: String,
         required: true,
-        trim: true        
+        trim: true,
+        unique: true
     },
     username: {
         type: String,
-        unique: true
+        unique: true    
     },
     email: {
         type: String,
