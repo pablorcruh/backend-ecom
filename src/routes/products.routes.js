@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import multer from 'multer'
 
+import {authJWT} from '../middleware'
 import * as productController from '../controllers/products.controller'
 
 const router = Router()
@@ -20,16 +21,16 @@ const upload = multer({
 
 router.get('/', productController.getProducts)
 
-router.post('/', productController.createProduct)
+router.post('/', [authJWT.verifyToken, authJWT.isAdmin],productController.createProduct)
 
 router.post('/:productId/image', upload.single('product'),productController.uploadImage, (error, req, res, next) => {
     res.status(400).send({error: error.message})
 })
 
-router.get('/:productId', productController.getProductById)
+router.get('/:productId',productController.getProductById)
 
-router.put('/:productId', productController.updateProductById)
+router.put('/:productId', [authJWT.verifyToken, authJWT.isAdmin], productController.updateProductById)
 
-router.delete('/:productId', productController.deleteProductById)
+router.delete('/:productId',[authJWT.verifyToken, authJWT.isAdmin], productController.deleteProductById)
 
 export default router
