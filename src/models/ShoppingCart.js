@@ -17,7 +17,8 @@ const shoppingCartModel = new Schema({
         }
     }]
 },{
-    versionKey: false
+    versionKey: false,
+    timestamps: true
 })
 
 export default model('ShoppingCart', shoppingCartModel)

@@ -36,7 +36,8 @@ const usersSchema = new Schema({
         type: Schema.Types.ObjectId
     }]
 },{
-    versionKey: false
+    versionKey: false,
+    timestamps: true
 })
 
 usersSchema.statics.encryptPassword = async (password) => {
