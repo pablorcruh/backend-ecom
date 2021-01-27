@@ -24,7 +24,7 @@ export const createShoppingCart = async (req, res) => {
         })
         newShoppingCart.products = modifiedData
         await newShoppingCart.save()
-        res.send(savedShoppingCart)            
+        res.send()            
     } catch (error) {   
         console.error(error.message)
         res.status(500).json({message: error.message})

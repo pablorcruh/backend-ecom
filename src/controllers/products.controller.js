@@ -31,11 +31,27 @@ export const uploadImage = async (req, res) => {
         const buffer = await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer()
         product.image = buffer
         await Products.findByIdAndUpdate(productId, product)
+        createImageUrl(productId)
         res.status(200).send()
     }catch(error){
         console.error.error(error.message)
         res.status(500).json({message: error.message})
     }
+}
+
+const createImageUrl = async (productId) => {
+    const product = await Products.findById(productId)
+    const hostname= os.hostname()
+    const imageURL = "http://"
+        .concat(hostname)
+        .concat(':')
+        .concat(process.env.PORT)
+        .concat('/api/products/')
+        .concat(productId)
+        .concat('/image')
+    product.imageUrl = imageURL
+    console.log(product)
+    await Products.findByIdAndUpdate(productId, product)
 }
 
 export const getProducts = async (req, res) => {
@@ -56,16 +72,6 @@ export const getProductById = async (req, res) => {
             res.status(400).json({message: 'product not found'})
             return
         }
-        const hostname= os.hostname()
-        console.log(process.env.PORT)
-        const imageURL = "http://"
-            .concat(hostname)
-            .concat(':')
-            .concat(process.env.PORT)
-            .concat('/api/products/')
-            .concat(product._id)
-            .concat('/image')
-        product.set('imageURL', imageURL, {strict:false})
         res.status(200).json(product) 
     }catch(error){
         console.error(error.message)
