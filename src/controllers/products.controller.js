@@ -1,5 +1,7 @@
 import Products from '../models/Products'
 import os from 'os'
+import sharp from 'sharp'
+
 export const createProduct = async (req, res) => {
     try {
         const {name, description, stock, price} = req.body
@@ -7,7 +9,7 @@ export const createProduct = async (req, res) => {
             name, 
             description,
             stock,
-            image: null,
+            image: '',
             price
         })
         const productSaved = await newProduct.save()
@@ -26,7 +28,8 @@ export const uploadImage = async (req, res) => {
             res.status(400).json({message: 'Product not found'})
             return
         }
-        product.image = req.file.buffer
+        const buffer = await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer()
+        product.image = buffer
         await Products.findByIdAndUpdate(productId, product)
         res.status(200).send()
     }catch(error){
@@ -62,7 +65,7 @@ export const getProductImage = async(req, res) => {
         const product = await Products.findById(req.params.productId)
         if(!product) throw new Error()
         if(!product.image) res.status(404).json({message:'no image found'})
-        res.set('Content-Type', 'image/jpg')
+        res.set('Content-Type', 'image/png')
         res.send(product.image)
     } catch (error) {
         console.error(error.message)
