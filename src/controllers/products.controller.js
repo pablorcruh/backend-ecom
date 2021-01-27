@@ -51,7 +51,14 @@ export const getProductById = async (req, res) => {
             return
         }
         const hostname= os.hostname()
-        const imageURL = "http://".concat(hostname).concat(':3000/api/products/').concat(product._id).concat('/image')
+        console.log(process.env.PORT)
+        const imageURL = "http://"
+            .concat(hostname)
+            .concat(':')
+            .concat(process.env.PORT)
+            .concat('/api/products/')
+            .concat(product._id)
+            .concat('/image')
         product.set('imageURL', imageURL, {strict:false})
         res.status(200).json(product) 
     }catch(error){

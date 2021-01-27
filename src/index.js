@@ -1,3 +1,8 @@
 import app from './app'
 import './database'
-app.listen(3000)
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const port = process.env.PORT
+app.listen(port)

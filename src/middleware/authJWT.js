@@ -6,7 +6,7 @@ export const verifyToken = async(req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
         if(!token) return res.status(403).json({message: 'Token not provided'})
-        const decoded  = jwt.verify(token, 'clave')
+        const decoded  = jwt.verify(token, process.env.TOKEN_SECRET)
         req.userId = decoded.id
         const user = await Users.findById(req.userId)
         if(!user) return res.status(404).json({message: 'User not Found'})

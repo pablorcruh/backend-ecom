@@ -32,7 +32,7 @@ export const userLogin = async (req, res) => {
     try{
         const {email, password} = req.body
         const user = await Users.findByCredentials(email, password)
-        const token = jwt.sign({id: user._id, roles: user.roles}, 'clave',{
+        const token = jwt.sign({id: user._id, roles: user.roles}, process.env.TOKEN_SECRET,{
             expiresIn: 86400
         })
         res.json({token})
