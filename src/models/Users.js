@@ -1,4 +1,4 @@
-import {Schema, model, SchemaType} from 'mongoose'
+import {Schema, model} from 'mongoose'
 import bcrypt from 'bcryptjs'
 import validator from 'validator'
 const usersSchema = new Schema({
