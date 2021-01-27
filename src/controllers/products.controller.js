@@ -34,7 +34,7 @@ export const uploadImage = async (req, res) => {
         res.status(200).send()
     }catch(error){
         console.error.error(error.message)
-        res.status(500).json({message: 'Oops something went wrong'})
+        res.status(500).json({message: error.message})
     }
 }
 
@@ -95,7 +95,7 @@ export const updateProductById = async (req, res) => {
         res.status(200).json(updatedProduct)
     }catch(error){
         console.error(error.message)
-        res.status(500).json({message: 'Oops something went wrong'})
+        res.status(500).json({message: error.message})
     }
 }
 
@@ -105,7 +105,7 @@ export const deleteProductById = async (req, res) => {
         await Products.findByIdAndDelete(productId)
         res.status(201).send()       
     } catch (error) {
-        console.log(error)
-        res.status(500).json({message: 'Oops something went wrong'})
+        console.error(error.message)
+        res.status(500).json({message: error.message})
     }
 }
