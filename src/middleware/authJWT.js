@@ -30,6 +30,23 @@ export const isAdmin = async(req, res, next) => {
         }
     } catch (error) {
         console.error(error.message)
-        res.status(403).json({message: 'Require Admin Role to perform Action'})
+        res.status(403).json({message: 'Require Admin Role'})
+    }
+}
+
+export const isShopper = async(req, res, next) => {
+    try {
+        const user = await Users.findById(req.userId)
+        const roles = await Roles.find({_id: {$in: user.roles}})
+        for(let i = 0; i < roles.length; i++){
+            if(roles[i].name === 'shopper'){
+                next()
+                return
+            }
+            res.status(403).json({message: 'Require Shopper Role'})
+        }    
+    } catch (error) {
+        console.error(error.message)
+        res.status(403).json({message: error.message})
     }
 }
