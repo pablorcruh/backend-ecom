@@ -88,7 +88,7 @@ export const getProductImage = async(req, res) => {
         res.send(product.image)
     } catch (error) {
         console.error(error.message)
-        res.status(404).send()    
+        res.status(404).send({message: 'Product not found'})    
     }
 }
 
