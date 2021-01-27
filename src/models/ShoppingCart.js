@@ -16,6 +16,8 @@ const shoppingCartModel = new Schema({
             default: 1
         }
     }]
+},{
+    versionKey: false
 })
 
 export default model('ShoppingCart', shoppingCartModel)

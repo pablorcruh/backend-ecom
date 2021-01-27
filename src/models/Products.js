@@ -11,6 +11,10 @@ const productSchema = new Schema({
     image: {
         type: Buffer
     },
+    imageUrl: {
+        type: String,
+        default: ''
+    },
     stock:{
         type: Number,
         required: true
