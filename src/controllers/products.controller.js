@@ -39,7 +39,13 @@ export const uploadImage = async (req, res) => {
 }
 
 export const getProducts = async (req, res) => {
-    res.json('getProductById')
+    try {
+        const products = await Products.find()
+        res.status(200).json(products)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).json({message: error.message})
+    }
 }
 
 export const getProductById = async (req, res) => {
