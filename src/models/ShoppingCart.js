@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongose'
+import {Schema, model} from 'mongoose'
 
 const shoppingCartModel = new Schema({
     products:[{
