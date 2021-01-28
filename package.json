@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir production",
     "dev": "nodemon ./src/index.js --exec babel-node",
-    "start": "node ./production/index.js"
+    "start": "npm run build && node ./production/index.js"
   },
   "keywords": [],
   "author": "",
