@@ -42,7 +42,7 @@ export const uploadImage = async (req, res) => {
 const createImageUrl = async (productId) => {
     const product = await Products.findById(productId)
     const hostname= os.hostname()
-    const imageURL = "http://"
+    const imageURL = "https://"
         .concat(hostname)
         .concat(':')
         .concat(process.env.PORT)
