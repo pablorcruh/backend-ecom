@@ -6,10 +6,12 @@ export const createShoppingCart = async (req, res) => {
         const {products, totalPrice} = req.body 
         products.forEach(async (product) => {
             let {id: productId, stock: stockAvailable} = await Products.findById(product.id)
-            stockAvailable = stockAvailable - product.quantity
-            await Products.findByIdAndUpdate(productId,{stock: stockAvailable}, {
-                new :true
-            })
+            if(stockAvailable > 0){
+                stockAvailable = stockAvailable - product.quantity
+                await Products.findByIdAndUpdate(productId,{stock: stockAvailable}, {
+                    new :true
+                })
+            }
         });
 
         const newShoppingCart = new ShoppingCart({
