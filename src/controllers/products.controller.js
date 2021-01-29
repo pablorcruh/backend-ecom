@@ -45,7 +45,6 @@ const createImageUrl = async (productId) => {
     const imageURL = "https://"
         .concat(process.env.APP_URL)
         .concat(':')
-        .concat(process.env.PORT)
         .concat('/api/products/')
         .concat(productId)
         .concat('/image')
