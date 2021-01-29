@@ -43,7 +43,7 @@ const createImageUrl = async (productId) => {
     const product = await Products.findById(productId)
     const hostname= os.hostname()
     const imageURL = "https://"
-        .concat(hostname)
+        .concat(process.env.APP_URL)
         .concat(':')
         .concat(process.env.PORT)
         .concat('/api/products/')
